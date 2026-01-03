@@ -1,0 +1,64 @@
+{
+    "type": "json_schema",
+    "json_schema": {
+        "name": "egitim_degerlendirme_raporu",
+        "strict": true,
+        "schema": {
+            "type": "object",
+            "properties": {
+                "analiz_yorumlari": {
+                    "type": "object",
+                    "properties": {
+                        "icerik_analizi": {"type": "string", "description": "Eğitim içeriği puanına dayalı detaylı yorum"},
+                        "egitmen_analizi": {"type": "string", "description": "Eğitmen puanına dayalı detaylı yorum"},
+                        "ortam_ve_sure_analizi": {"type": "string", "description": "Ortam ve süre puanlarına dayalı yorum"}
+                    },
+                    "required": ["icerik_analizi", "egitmen_analizi", "ortam_ve_sure_analizi"],
+                    "additionalProperties": false
+                },
+                "katilimci_onerileri": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "sorun_basligi": {"type": "string", "description": "Sorunun kısa başlığı (Örn: Süre Sorunu)"},
+                            "yorum_ozeti": {"type": "string", "description": "Katılımcı yorumunun özeti"},
+                            "potansiyel_etki": {"type": "string", "description": "Bu sorunun eğitim üzerindeki olumsuz etkisi"}
+                        },
+                        "required": ["sorun_basligi", "yorum_ozeti", "potansiyel_etki"],
+                        "additionalProperties": false
+                    }
+                },
+                "swot_analizi": {
+                    "type": "object",
+                    "properties": {
+                        "guclu_yonler": {"type": "array", "items": {"type": "string"}},
+                        "zayif_yonler": {"type": "array", "items": {"type": "string"}},
+                        "firsatlar": {"type": "array", "items": {"type": "string"}},
+                        "tehditler": {"type": "array", "items": {"type": "string"}}
+                    },
+                    "required": ["guclu_yonler", "zayif_yonler", "firsatlar", "tehditler"],
+                    "additionalProperties": false
+                },
+                "aksiyon_plani": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "tespit_edilen_sorun": {"type": "string"},
+                            "cozum_onerisi": {"type": "string", "description": "Somut ve uygulanabilir çözüm"}
+                        },
+                        "required": ["tespit_edilen_sorun", "cozum_onerisi"],
+                        "additionalProperties": false
+                    }
+                },
+                "sonuc_ve_yonetici_ozeti": {
+                    "type": "string",
+                    "description": "Genel değerlendirme ve yöneticiye not"
+                }
+            },
+            "required": ["analiz_yorumlari", "katilimci_onerileri", "swot_analizi", "aksiyon_plani", "sonuc_ve_yonetici_ozeti"],
+            "additionalProperties": false
+        }
+    }
+}
