@@ -1,0 +1,287 @@
+:root {
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary: #f8fafc; /* Sol panel arka planı */
+  --sidebar-bg: #ffffff; /* Sağ panel arka planı */
+  --text: #334155;
+  --border: #e2e8f0;
+  --header-height: 60px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background-color: var(--secondary);
+  overflow: hidden; /* Sayfanın kendisi kaymasın, iç paneller kaysın */
+}
+
+/* --- LAYOUT YAPISI --- */
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* 1. HEADER (NAVBAR) */
+.navbar {
+  height: var(--header-height);
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  z-index: 10;
+}
+
+.nav-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* 2. MAIN CONTENT AREA (SPLIT SCREEN) */
+.main-content {
+  display: flex;
+  flex: 1; /* Header'dan kalan tüm yüksekliği kapla */
+  overflow: hidden; /* İçerik taşarsa gizle (scroll içerde olacak) */
+}
+
+/* SOL TARAFA: RAPOR ALANI */
+.report-panel {
+  flex: 1; /* Kalan tüm genişliği al */
+  background-color: var(--secondary);
+  overflow-y: auto; /* Dikey kaydırma sadece burada olsun */
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.report-paper {
+  background: white;
+  width: 100%;
+  max-width: 900px; /* A4 benzeri okuma genişliği */
+  min-height: 100%;
+  padding: 3rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* SAĞ TARAFA: CHAT ALANI */
+.chat-panel {
+  width: 400px; /* Sabit genişlik */
+  background-color: var(--sidebar-bg);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  background-color: #fcfcfc;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #fdfdfd;
+}
+
+.chat-input-container {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+
+/* --- COMPONENTS --- */
+
+/* Buttons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+.btn-primary:hover { background-color: var(--primary-hover); }
+
+.btn-outline {
+  background-color: white;
+  border-color: var(--border);
+  color: var(--text);
+}
+.btn-outline:hover { background-color: #f1f5f9; }
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Chat Bubbles */
+.message {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  max-width: 90%;
+}
+
+.msg-user {
+  background-color: var(--primary);
+  color: white;
+  align-self: flex-end;
+  margin-left: auto;
+  border-bottom-right-radius: 2px;
+}
+
+.msg-ai {
+  background-color: #f1f5f9;
+  color: var(--text);
+  margin-right: auto;
+  border-bottom-left-radius: 2px;
+}
+
+.chat-input-wrapper {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.75rem;
+  color:rgb(0, 0, 0);
+  background-color: whitesmoke;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  outline: none;
+}
+.chat-input:focus { border-color: var(--primary); }
+
+/* Loading Spinner */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Table Styles for Report */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+}
+th, td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
+}
+th { background-color: #f8fafc; font-weight: 600; }
+
+/* PRINT STYLES */
+@media print {
+  .navbar, .chat-panel { display: none !important; }
+  .app-container { height: auto; display: block; }
+  .main-content { display: block; overflow: visible; }
+  .report-panel { padding: 0; overflow: visible; height: auto; }
+  .report-paper { box-shadow: none; max-width: 100%; padding: 0; }
+  body { background-color: white; overflow: visible; }
+}
+
+/* Chat içindeki Markdown düzenlemeleri */
+.markdown-content {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.markdown-content p {
+  margin: 0.5rem 0; /* Paragraflar arası boşluk */
+}
+
+.markdown-content p:first-child {
+  margin-top: 0;
+}
+
+.markdown-content p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-content ul, .markdown-content ol {
+  margin: 0.5rem 0;
+  padding-left: 1.5rem; /* Madde işaretleri için girinti */
+}
+
+.markdown-content li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-content strong {
+  font-weight: 700;
+}
+
+/* Başlıklar chat içinde çok büyük olmasın */
+.markdown-content h1, 
+.markdown-content h2, 
+.markdown-content h3 {
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
