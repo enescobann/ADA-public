@@ -6,7 +6,11 @@ import os
 with open("schema.json", "r", encoding="utf-8") as file:
     REPORT_SCHEMA = json.load(file)
 
-client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+# Ollama'nın OpenAI uyumlu API'si. Model ve adres ortam değişkenleriyle değiştirilebilir.
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+MODEL_NAME = os.getenv("ADA_MODEL", "llama3.1")
+
+client = OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
 def analyze_csv_data(file_content):
     """Pandas ile CSV içeriğini okur ve analiz için hazırlar."""
@@ -50,7 +54,7 @@ def generate_ai_report(stats):
     ]
 
     completion = client.chat.completions.create(
-        model="turkish-gemma-9b-t1",
+        model=MODEL_NAME,
         messages=messages,
         temperature=0.4,
         response_format=REPORT_SCHEMA 
@@ -69,7 +73,7 @@ def generate_ai_report(stats):
 def chat_with_ai(messages):
     """Sohbet fonksiyonu."""
     completion = client.chat.completions.create(
-        model="turkish-gemma-9b-t1",
+        model=MODEL_NAME,
         messages=messages,
         temperature=0.7
     )
