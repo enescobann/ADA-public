@@ -53,7 +53,15 @@ function App() {
       
       // Sohbeti sıfırla ve başlat
       setChatHistory([
-        { role: "system", content: "Sen bu raporu analiz eden asistansın." },
+        {
+          role: "system",
+          content:
+            "Sen aşağıdaki eğitim değerlendirme raporunu analiz eden bir asistansın. " +
+            "Sorulara bu verilere dayanarak cevap ver.\n\n" +
+            `PUANLAR (5 üzerinden): İçerik ${data.stats[0].toFixed(2)}, Eğitmenler ${data.stats[1].toFixed(2)}, ` +
+            `Ortam ${data.stats[2].toFixed(2)}, Süre ${data.stats[3].toFixed(2)}\n\n` +
+            `RAPOR:\n${JSON.stringify(data.report, null, 2)}`
+        },
         { role: "assistant", content: "Raporu inceledim. Yan taraftan sonuçları görebilirsiniz. Sorularınız varsa buradayım." }
       ]);
 
@@ -81,7 +89,7 @@ function App() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          history: newHistory,
+          history: chatHistory,
           user_input: userInput
         }),
       });
