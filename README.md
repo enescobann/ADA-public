@@ -8,7 +8,7 @@ ADA (Anket Değerlendirme Aracı) generates structured evaluation reports from t
 
 ## How it works
 
-Score statistics are computed deterministically and only the interpretation is left to the model, which keeps the numbers in the report correct.
+Score statistics are computed deterministically and only the interpretation is left to the model. The model never calculates figures itself, which keeps the numbers in the report correct and reduces the risk of hallucination.
 
 1. **Statistics.** The uploaded CSV is parsed with pandas. Mean scores are computed for each criterion (content, instructors, environment, duration) and the free-text comments are collected.
 2. **Report generation.** Scores and comments are sent to the LLM with a strict JSON Schema (`backend/schema.json`) as the response format. The report always contains the same sections: per-criterion analysis, participant feedback with its potential impact, SWOT analysis, action plan and executive summary.
